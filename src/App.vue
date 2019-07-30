@@ -13,21 +13,23 @@
   import TodoHeader from './comments/TodoHeader'
   import TodoList from './comments/TodoList'
   import TodoFooter from './comments/TodoFooter'
+  import storageUtil from './util/storageUtil'
 
   export default {
     data (){
       return{
-        //将字符串转换成JSON格式
-        todos: JSON.parse(window.localStorage.getItem("title_key") || '[]')
+        //将字符串转换成JSON格式  JSON.parse(window.localStorage.getItem("title_key") || '[]')
+        todos: storageUtil.readTodos()
       }
     },
     watch:{  //监视
       todos:{
         deep: true, //深度监视
-        handler:function (value) {
-          //将todos最新的值的JSON数据，保存到LocalStorage
-          window.localStorage.setItem('title_key',JSON.stringify(value))
-        }
+        // handler:function (value) {
+        //   //将todos最新的值的JSON数据，保存到LocalStorage
+        //   window.localStorage.setItem('title_key',JSON.stringify(value))
+        // }
+        handler:storageUtil.saveTodos
       }
     },
     methods:{
